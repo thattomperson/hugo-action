@@ -16,10 +16,9 @@ async function run() {
 
     core.warning(`download ${url}`)
 
-    const hugoPath = await tc.downloadTool(url)
+    const hugoAssets = await tc.downloadTool(url)
 
-    await io.mkdirP(`${hugoPath}/tmp/`)
-    const hugoExtractedFolder = await tc.extractTar(hugoPath, `${hugoPath}/tmp/`);
+    const hugoExtractedFolder = await tc.extractTar(hugoAssets, `/tmp`);
     hugoBin = `${hugoExtractedFolder}/hugo`;
 
     await tc.cacheFile(hugoBin, 'hugo', 'hugo', fullVersion)
