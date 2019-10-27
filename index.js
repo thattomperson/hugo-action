@@ -13,7 +13,7 @@ async function run() {
     const hugoPath = await tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${extended ? '_extended' : ''}_${version}_${platform}.tar.gz`)
 
     await io.mkdirP('/usr/src/hugo/')
-    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/src/hugo/');
+    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/local/src/hugo/');
 
     const cachedPath = await tc.cacheDir(hugoExtractedFolder, 'hugo', version);
     core.addPath(cachedPath);
