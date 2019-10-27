@@ -12,7 +12,7 @@ async function run() {
     const fullVersion = `${extended ? 'extended_' : ''}${version}`
 
     const platform = getPlatform()
-    const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${version}_${platform}.tar.gz`
+    const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${platform}.tar.gz`
 
     core.debug(`download ${url}`)
 
