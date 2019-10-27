@@ -1,15 +1,24 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const tc = require('@actions/tool-cache');
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+async function run() {
+  try {
+    const version = core.getInput('version') || '0.59.0'
+    const extended = core.getInput('extended') || false
+
+    const platform = getPlatform()
+
+    const hugoPath = tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${extended ? '_extended' : ''}_${version}_${platform}.tar.gz`)
+    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/src/hugo');
+
+    const cachedPath = await tc.cacheDir(hugoExtractedFolder, 'hugo', version);
+    core.addPath(cachedPath);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+}
+
+function getPlatform() {
+  return 'Linux-64bit'
 }
