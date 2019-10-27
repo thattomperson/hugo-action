@@ -14,7 +14,7 @@ async function run() {
     const platform = getPlatform()
     const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${platform}.tar.gz`
 
-    core.debug(`download ${url}`)
+    core.warning(`download ${url}`)
 
     const hugoPath = await tc.downloadTool(url)
 
