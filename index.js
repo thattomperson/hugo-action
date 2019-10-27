@@ -22,3 +22,6 @@ async function run() {
 function getPlatform() {
   return 'Linux-64bit'
 }
+
+
+run()
