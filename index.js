@@ -12,8 +12,11 @@ async function run() {
     const fullVersion = `${extended ? 'extended_' : ''}${version}`
 
     const platform = getPlatform()
+    const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${version}_${platform}.tar.gz`
 
-    const hugoPath = await tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${version}_${platform}.tar.gz`)
+    core.debug(`download ${url}`)
+
+    const hugoPath = await tc.downloadTool()
 
     await io.mkdirP(`${hugoPath}/tmp/`)
     const hugoExtractedFolder = await tc.extractTar(hugoPath, `${hugoPath}/tmp/`);
