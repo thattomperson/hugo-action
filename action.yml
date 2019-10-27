@@ -1,13 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Download hugo'
+description: 'Compile hugo websites'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we we greeted you'
+  version:  # id of input
+    description: 'Version to download'
+    required: false
+  extended:
+    description: 'Include SCSS support'
+  required: false
 runs:
   using: 'node12'
   main: 'index.js'

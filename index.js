@@ -16,7 +16,7 @@ async function run() {
 
     core.debug(`download ${url}`)
 
-    const hugoPath = await tc.downloadTool()
+    const hugoPath = await tc.downloadTool(url)
 
     await io.mkdirP(`${hugoPath}/tmp/`)
     const hugoExtractedFolder = await tc.extractTar(hugoPath, `${hugoPath}/tmp/`);
