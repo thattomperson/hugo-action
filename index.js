@@ -12,7 +12,7 @@ async function run() {
     const fullVersion = `${extended ? 'extended_' : ''}${version}`
 
     const platform = getPlatform()
-    const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${platform}.tar.gz`
+    const url = `https://github.com/gohugoio/hugo/releases/download/v${version}/hugo_${fullVersion}_${platform}.tar.gz`
 
     core.warning(`download ${url}`)
 
@@ -29,17 +29,6 @@ async function run() {
   }
 }
 
-'aix'
-        | 'android'
-        | 'darwin'
-        | 'freebsd'
-        | 'linux'
-        | 'openbsd'
-        | 'sunos'
-        | 'win32'
-        | 'cygwin'
-        | 'netbsd';
-
 function getPlatform() {
   switch (os.platform()) {
     case "darwin":
@@ -53,6 +42,5 @@ function getPlatform() {
 
   throw "Unrecognised platform"
 }
-
 
 run()
