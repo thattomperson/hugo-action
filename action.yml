@@ -6,7 +6,7 @@ inputs:
     required: false
   extended:
     description: 'Include SCSS support'
-  required: false
+    required: false
 runs:
   using: 'node12'
   main: 'index.js'
