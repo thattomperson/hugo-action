@@ -24,9 +24,10 @@ async function run() {
     await io.mkdirP(hugoPath);
     core.addPath(hugoPath);
 
-    await io.mv(hugoTmpBin, hugoBin)
 
-    await tc.cacheFile(`${hugoBin}/hugo`, 'hugo', 'hugo', fullVersion)
+    await io.mv(hugoTmpBin, hugoPath)
+
+    await tc.cacheFile(`${hugoPath}/hugo`, 'hugo', 'hugo', fullVersion)
 
   } catch (error) {
     core.setFailed(error.message);
