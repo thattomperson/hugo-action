@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const io = require('@actions/io');
 const tc = require('@actions/tool-cache');
+const os = require('os')
 
 async function run() {
   try {
@@ -9,7 +10,6 @@ async function run() {
     const extended = core.getInput('extended') || false
 
     const fullVersion = `${extended ? 'extended_' : ''}${version}`
-
 
     const platform = getPlatform()
 
@@ -26,8 +26,29 @@ async function run() {
   }
 }
 
+'aix'
+        | 'android'
+        | 'darwin'
+        | 'freebsd'
+        | 'linux'
+        | 'openbsd'
+        | 'sunos'
+        | 'win32'
+        | 'cygwin'
+        | 'netbsd';
+
 function getPlatform() {
-  return 'Linux-64bit'
+  switch (os.platform()) {
+    case "darwin":
+      return "macOS-64bit";
+    case "win32":
+    case "cygwin":
+      return "Windows-64bit";
+    case "linux":
+      return "Linux-64bit"
+  }
+
+  throw "Unrecognised platform"
 }
 
 
