@@ -8,15 +8,19 @@ async function run() {
     const version = core.getInput('version') || '0.59.0'
     const extended = core.getInput('extended') || false
 
+    const fullVersion = `${extended ? 'extended_' : ''}${version}`
+
+
     const platform = getPlatform()
 
-    const hugoPath = await tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${extended ? '_extended' : ''}_${version}_${platform}.tar.gz`)
+    const hugoPath = await tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${fullVersion}_${version}_${platform}.tar.gz`)
 
-    await io.mkdirP('/usr/local/src/hugo/')
-    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/local/src/hugo/');
+    await io.mkdirP(`${hugoPath}/tmp/`)
+    const hugoExtractedFolder = await tc.extractTar(hugoPath, `${hugoPath}/tmp/`);
+    hugoBin = `${hugoExtractedFolder}/hugo`;
 
-    const cachedPath = await tc.cacheDir(hugoExtractedFolder, 'hugo', version);
-    core.addPath(cachedPath);
+    await tc.cacheFile(hugoBin, 'hugo', 'hugo', fullVersion)
+
   } catch (error) {
     core.setFailed(error.message);
   }
