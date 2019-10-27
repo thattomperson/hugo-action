@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const io = require('@actions/io');
 const tc = require('@actions/tool-cache');
 
 async function run() {
@@ -10,7 +11,9 @@ async function run() {
     const platform = getPlatform()
 
     const hugoPath = await tc.downloadTool(`https://github.com/gohugoio/hugo/releases/download/v${version}/hugo${extended ? '_extended' : ''}_${version}_${platform}.tar.gz`)
-    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/src/hugo');
+
+    await io.mkdirP('/usr/src/hugo/')
+    const hugoExtractedFolder = await tc.extractTar(hugoPath, '/usr/src/hugo/');
 
     const cachedPath = await tc.cacheDir(hugoExtractedFolder, 'hugo', version);
     core.addPath(cachedPath);
