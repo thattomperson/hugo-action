@@ -19,9 +19,14 @@ async function run() {
     const hugoAssets = await tc.downloadTool(url)
 
     const hugoExtractedFolder = await tc.extractTar(hugoAssets, `/tmp`);
-    hugoBin = `${hugoExtractedFolder}/hugo`;
+    const hugoTmpBin = `${hugoExtractedFolder}/hugo`;
+    const hugoPath = `${process.env.HOME}/bin`;
+    await io.mkdirP(hugoPath);
+    core.addPath(hugoPath);
 
-    await tc.cacheFile(hugoBin, 'hugo', 'hugo', fullVersion)
+    await io.mv(hugoTmpBin, hugoBin)
+
+    await tc.cacheFile(`${hugoBin}/hugo`, 'hugo', 'hugo', fullVersion)
 
   } catch (error) {
     core.setFailed(error.message);
